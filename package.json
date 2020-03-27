@@ -13,9 +13,13 @@
     "bootstrap-vue": "^2.9.0",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
+    "dr-vue-echarts": "^1.0.13",
+    "echarts": "^4.7.0",
+    "v-charts": "^1.19.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
-    "vue-chartjs": "^3.5.0"
+    "vue-chartjs": "^3.5.0",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
