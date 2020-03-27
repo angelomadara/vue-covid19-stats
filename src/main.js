@@ -1,8 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Axios from 'axios'
+import router from './router.js'
+
+import VCharts from 'v-charts';
+// import VueCharts from 'vue-chartjs'
+import DrVueEcharts from 'dr-vue-echarts'
 
 Vue.config.productionTip = false
+
+
+Vue.use(VCharts)
+// Vue.use(VueCharts)
+Vue.use(DrVueEcharts)
 
 Vue.prototype.axios = Axios
 Vue.prototype.coronaApi = 'https://corona.lmao.ninja/'
@@ -17,4 +27,5 @@ Vue.filter('prettyNumber',function(str){
 
 new Vue({
   render: h => h(App),
+  router
 }).$mount('#app')

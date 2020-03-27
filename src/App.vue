@@ -1,30 +1,21 @@
 <template>
   <div class="container">
-    <daily/>
+    <h1 class="text-center">Covid19 Update</h1>
+    <today></today>
   </div>
 </template>
 
 <script>
-import daily from './components/Daily'
+import today from './components/Today'
+
 export default {
   name: 'App',
-  components: {
-    daily
-  },
-  data(){
-    return {
-      // msg : 'hello :)'
-    }
-  }
+  components: { today }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
