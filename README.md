@@ -1,7 +1,7 @@
 # covid19
-```
-Live : [https://covid.vierzehn.xyz](https://covid.vierzehn.xyz/)
-```
+
+### Live demo: 
+[covid.vierzehn.xyz](https://covid.vierzehn.xyz/)
 
 ## Project setup
 ```
