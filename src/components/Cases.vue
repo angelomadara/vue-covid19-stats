@@ -1,37 +1,38 @@
 <template>
-  <div id="country-cases-holder">
+  <div>
+    <p> Sorted by cases per country </p>
 
-    <!-- <b-input-group size="sm">
-      <b-form-input
-        v-model="filter"
-        type="search"
-        id="filterInput"
-        placeholder="Type to Search"
-      ></b-form-input>
-      <b-input-group-append>
-        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-      </b-input-group-append>
-    </b-input-group>
-    <br> -->
+      <b-input-group size="sm">
+        <b-form-input
+          v-model="filter"
+          type="search"
+          id="filterInput"
+          placeholder="Type to Search"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    <div id="country-cases-holder">
+      <b-table 
+        id="country-table" 
+        small striped hover bordered sticky-header
+        :items="cases" 
+        :fields="fields"
+        :filter="filter"
+      ></b-table>
 
-    <b-table 
-      id="country-table" 
-      small striped hover bordered sticky-header
-      :items="cases" 
-      :fields="fields"
-      :filter="filter"
-    ></b-table>
+        <!-- :per-page="perPage"
+        :current-page="currentPage" -->
 
-      <!-- :per-page="perPage"
-      :current-page="currentPage" -->
+      <!-- <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="country-table"
+      ></b-pagination> -->
 
-    <!-- <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="country-table"
-    ></b-pagination> -->
-
+    </div>
   </div>
 </template>
 

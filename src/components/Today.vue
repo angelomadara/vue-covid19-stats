@@ -30,9 +30,6 @@
     </div>
 
     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-        <p>
-        Sorted by cases per country
-        </p>
         <cases></cases>
     </div>
   </div>
