@@ -3,27 +3,26 @@
     <div class="col-12">
         <h5 class="text-center">Last Update: {{ lastUpdate() }}</h5>
     </div>
-    <div class="col-5">
+    <div class="col-4">
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+            <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Case Count: {{ reports.cases | prettyNumber }}</h5>
+                    <h5 class="mb-1">Total Confirmed: {{ reports.cases | prettyNumber }}</h5>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+            <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Death Count: {{ reports.deaths | prettyNumber }}</h5>
+                    <h5 class="mb-1">Total Deaths: {{ reports.deaths | prettyNumber }}</h5>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-success">
+            <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Recoviries Count: {{ reports.recovered | prettyNumber }}</h5>
+                    <h5 class="mb-1">Total Recovered: {{ reports.recovered | prettyNumber }}</h5>
                 </div>
             </a>
         </div>
     </div>
-    <div class="col-6">
-
+    <div class="col-8">
         <pie-chart :data="data"/>
     </div>
   </div>
@@ -39,7 +38,6 @@ export default {
         }
     },
     created(){
-        // var _this = this
         this.axios.get(this.coronaApi+`all`).then(res => {
             this.reports = res.data
             this.data = [
@@ -70,5 +68,9 @@ export default {
 </script>
 
 <style>
-
+.chart {
+  width: auto !important;
+  /* height: auto !important; */
+  height: 400px !important;
+}
 </style>
