@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="text-center">Covid19 Update</h1>
+    <h1 class="text-center">Corona Virus 2019 Update</h1>
     <div>
       <p>API source: <a href="https://documenter.getpostman.com/view/8854915/SzS7R6uu?version=latest" target="_blank">Github repo</a> or check the documetation on <a href="https://documenter.getpostman.com/view/8854915/SzS7R6uu?version=latest" target="_blank">postman</a>.</p>
     </div>
