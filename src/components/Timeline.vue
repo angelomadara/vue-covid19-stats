@@ -1,37 +1,71 @@
 <template>
     <div>
-        timeline 
+        Historical data of {{ country }}
+        <bar-chart 
+            :data="data"
+            label-rotate 
+            zoom
+            :zoom-range="zoomRange"
+            style="height:500px !important"
+        />
+        <!-- <line-chart
+            :data="data"
+            area
+            animation='false'
+            style="height:500px !important"
+        /> -->
     </div>
 </template>
 
 <script>
+import { EventBus } from '../event-bus.js'
 export default {
     // confirmed, recovered, deaths
     // 
     data(){
         return {
-            data : {}
+            country : '',
+            data : [],
+            zoomRange : [],
         }
     },
     created(){
+        EventBus.$on('showTimeline',str => {
+            this.country = str
+            this.timeline(str)
+        })
     },
     methods: {
-        confirmed(){
-            this.axios.get(`https://api.covid19api.com/country/philippines/status/confirmed/live`).then(res => {
-                this.reports = res.data
+        timeline(str){
+            str = ""+str.toLowerCase()
+            this.axios.get(this.coronaApi+`v2/historical/`+str).then(res => {
+                // console.log(res.data)
+                let rawCases = res.data.timeline.cases
+                let cases = []; let x = 0;
+                Object.keys(rawCases).forEach(element => {
+                    // console.log(element,cases[element])
+                    cases[x] = {'label':element,'value':rawCases[element]}
+                    x++
+                });
+                
+                let rawDeaths = res.data.timeline.deaths
+                let deaths = []; let y = 0;
+                Object.keys(rawDeaths).forEach(element => {
+                    deaths[y] = {'label':element,'value':rawDeaths[element]}
+                    y++
+                })
+
+                this.zoomRange = [80,100]
+                
                 this.data = [
                     {
-                        name: 'Total Confirmed',
-                        value: res.data.cases,
+                        name : 'Cases',
+                        data : cases
                     },
                     {
-                        name: 'Total Recovered',
-                        value: res.data.recovered,
-                    },
-                    {
-                        name: 'Total Deaths',
-                        value: res.data.deaths,
-                    },
+                        name : 'Deaths',
+                        data : deaths
+                    }
                 ]
             })
         }
@@ -40,5 +74,8 @@ export default {
 </script>
 
 <style>
-
+.chart {
+  width: 100%;
+  height: 300px;
+}
 </style>

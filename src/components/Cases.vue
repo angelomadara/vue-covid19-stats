@@ -3,32 +3,21 @@
     <p> Sorted by cases per country </p>
 
       <b-input-group size="sm">
-        <b-form-input
-          v-model="filter"
-          type="search"
-          id="filterInput"
-          placeholder="Type to Search"
-        ></b-form-input>
+        <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search"></b-form-input>
         <b-input-group-append>
           <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
         </b-input-group-append>
       </b-input-group>
     <div id="country-cases-holder">
 
-      <b-table 
-        id="country-table" 
-        small striped hover bordered sticky-header
-        :items="cases" 
-        :fields="fields"
-        :filter="filter"
-      >
+      <b-table id="country-table" small striped hover bordered sticky-header :items="cases" :fields="fields" :filter="filter" >
 
         <template v-slot:cell(countryInfo)="data">
           <img :src="data.item.countryInfo.flag" alt="" width="20px" style='display:block;margin:6px auto'>
         </template>
 
         <template v-slot:cell(country)="data">
-          <a :href="`/timeline/`+data.item.country | lowerCase">{{ data.item.country }}</a>
+          <a href="javascript:void(0)" @click="thisTimeline(data.item.country)">{{ data.item.country }}</a>
         </template>
 
         <template v-slot:cell(cases)="data">
@@ -66,6 +55,7 @@
 </template>
 
 <script>
+import {EventBus} from '../event-bus.js'
 export default {
   data(){
     return{
@@ -81,6 +71,7 @@ export default {
         { key: 'active', sortable: true },
         { key: 'critical', sortable: true },
       ],
+      countryTimeline: '',
     }
   },
   created(){
@@ -91,6 +82,17 @@ export default {
   computed:{
     rows() {
       return this.cases.length
+    }
+  },
+  methods:{
+    thisTimeline(str){
+      // this.countryTimeline = str
+      EventBus.$emit('showTimeline',str)
+      // str = ""+str.toLowerCase()
+
+      // this.axios.get(this.coronaApi+`v2/historical/`+str).then(res => {
+      //   this.countryTimeline = res.data
+      // })
     }
   }
 }
