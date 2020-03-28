@@ -1,35 +1,45 @@
 <template>
   <div class="row">
     <div class="col-12">
-        <h5 class="text-center">Last Update: {{ lastUpdate() }}</h5>
+        <h5 class="text-center"></h5>
     </div>
-    <div class="col-4">
+
+    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
         <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Total Confirmed: {{ reports.cases | prettyNumber }}</h5>
+                    <h6 class="mb-1">Total Confirmed: <span class="text-primary"><b>{{ reports.cases | prettyNumber }}</b></span></h6>
                 </div>
             </a>
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Total Deaths: {{ reports.deaths | prettyNumber }}</h5>
+                    <h6 class="mb-1">Total Deaths: <span class="text-secondary"><b>{{ reports.deaths | prettyNumber }}</b></span></h6>
                 </div>
             </a>
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Total Recovered: {{ reports.recovered | prettyNumber }}</h5>
+                    <h6 class="mb-1">Total Recovered: <span class="text-success"><b>{{ reports.recovered | prettyNumber }}</b></span></h6>
                 </div>
             </a>
         </div>
     </div>
-    <div class="col-8">
-        <pie-chart :data="data"/>
+
+    <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+        Last Update: {{ lastUpdate() }}
+        <totalcasepie :data='data'></totalcasepie>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <cases></cases>
     </div>
   </div>
 </template>
 
 <script>
+import totalcasepie from './TotalCasesPie'
+import cases from './Cases'
 export default {
+    components : {totalcasepie,cases},
     name : "Daily",
     data(){
         return {
@@ -55,6 +65,7 @@ export default {
                 },
             ]
         })
+        this.news()
     },
     mounted(){
     },

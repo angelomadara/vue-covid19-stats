@@ -7,6 +7,7 @@ import VCharts from 'v-charts';
 // import VueCharts from 'vue-chartjs'
 import DrVueEcharts from 'dr-vue-echarts'
 import VueTable2 from 'vue-tables-2'
+import moment from 'moment'
 
 Vue.config.productionTip = false
 
@@ -20,9 +21,16 @@ Vue.use(VCharts)
 Vue.use(DrVueEcharts)
 Vue.use(VueTable2)
 
+Vue.prototype.moment = moment
 Vue.prototype.axios = Axios
 Vue.prototype.coronaApi = 'https://corona.lmao.ninja/'
+Vue.prototype.newsApi = 'https://newsapi.org/v2/everything'
+Vue.prototype.newsApiToken = 'c59b33a71f3e4c2a800b135cbabba7a7'
 
+/**
+ * date today
+ */
+Vue.prototype.today = moment().format('YYYY/MM/DD')
 /**
  * filters
  */
