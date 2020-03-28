@@ -7,18 +7,18 @@
     <navs></navs>
     <today></today>
     <hr>
-    <news></news>
+    <!-- <news></news> -->
   </div>
 </template>
 
 <script>
 import navs from './components/Navs'
 import today from './components/Today'
-import news from './components/News'
+// import news from './components/News'
 
 export default {
   name: 'App',
-  components: { today, navs, news }
+  components: { today, navs }
 }
 </script>
 

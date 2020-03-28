@@ -4,7 +4,9 @@
         <h5 class="text-center"></h5>
     </div>
 
-    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="text-center">Last Update: {{ lastUpdate() }}</div>
+        <totalcasepie :data='data'></totalcasepie>
         <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
@@ -24,12 +26,11 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
-        Last Update: {{ lastUpdate() }}
-        <totalcasepie :data='data'></totalcasepie>
-    </div>
+    <!-- <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+        
+    </div> -->
 
-    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
         <cases></cases>
     </div>
   </div>

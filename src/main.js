@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Axios from 'axios'
-import router from './router.js'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import router from './router'
+import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import VCharts from 'v-charts';
 // import VueCharts from 'vue-chartjs'
 import DrVueEcharts from 'dr-vue-echarts'
@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+Vue.use(BootstrapVueIcons)
 
 Vue.use(VCharts)
 // Vue.use(VueCharts)
@@ -37,6 +38,11 @@ Vue.prototype.today = moment().format('YYYY/MM/DD')
 Vue.filter('prettyNumber',function(str){
   str = ""+str; // ignore trowing error and make sure that the value will be string 
   return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+})
+
+Vue.filter('lowerCase',function(str){
+  str = ""+str; // ignore trowing error and make sure that the value will be string 
+  return str.toLowerCase()
 })
 
 new Vue({

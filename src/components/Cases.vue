@@ -14,23 +14,52 @@
         </b-input-group-append>
       </b-input-group>
     <div id="country-cases-holder">
+
       <b-table 
         id="country-table" 
         small striped hover bordered sticky-header
         :items="cases" 
         :fields="fields"
         :filter="filter"
-      ></b-table>
+      >
 
-        <!-- :per-page="perPage"
-        :current-page="currentPage" -->
+        <template v-slot:cell(countryInfo)="data">
+          <img :src="data.item.countryInfo.flag" alt="" width="20px" style='display:block;margin:6px auto'>
+        </template>
 
-      <!-- <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="country-table"
-      ></b-pagination> -->
+        <template v-slot:cell(country)="data">
+          <a :href="`/timeline/`+data.item.country | lowerCase">{{ data.item.country }}</a>
+        </template>
+
+        <template v-slot:cell(cases)="data">
+          {{ data.item.cases | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(todayCases)="data">
+          {{ data.item.todayCases | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(deaths)="data">
+          {{ data.item.todayCases | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(todayDeaths)="data">
+          {{ data.item.todayDeaths | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(recovered)="data">
+          {{ data.item.recovered | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(active)="data">
+          {{ data.item.active | prettyNumber }}
+        </template>
+
+        <template v-slot:cell(critical)="data">
+          {{ data.item.critical | prettyNumber }}
+        </template>
+
+      </b-table>
 
     </div>
   </div>
@@ -41,10 +70,9 @@ export default {
   data(){
     return{
       filter: '',
-      perPage: 10,
-      currentPage: 1,
       cases : [],
       fields: [
+        { key: 'countryInfo', label : '', sortable: false },
         { key: 'country', sortable: true },
         { key: 'cases', sortable: true },
         { key: 'todayCases', sortable: true },
@@ -84,6 +112,6 @@ export default {
     background: #fff;
     cursor: pointer;
     /* border-bottom: 10px solid #ddd; */
-    box-shadow: 0px -10px  0px #ddd, 0px 5px  10px #ddd;
+    box-shadow: 0px -10px  0px #ddd, 5px 5px  10px #ddd;
   }
 </style>
