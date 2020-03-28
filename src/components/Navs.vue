@@ -1,11 +1,11 @@
 <template>
     <nav>
-        <ul>
+        <!-- <ul>
             <li>Today</li>
             <li>Cases</li>
             <li>Country</li>
             <li>History</li>
-        </ul>
+        </ul> -->
     </nav>
 </template>
 
