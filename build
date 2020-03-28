@@ -1,5 +1,5 @@
 #!/bin/bash
-
+npm install
 # abort on errors
 set -e
 # compile

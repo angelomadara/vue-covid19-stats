@@ -1,10 +1,7 @@
 <template>
-  <div>
-    <p>
-      Sorted by cases per country
-    </p>
+  <div id="country-cases-holder">
 
-    <b-input-group size="sm">
+    <!-- <b-input-group size="sm">
       <b-form-input
         v-model="filter"
         type="search"
@@ -15,24 +12,25 @@
         <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
       </b-input-group-append>
     </b-input-group>
-    <br>
+    <br> -->
 
     <b-table 
       id="country-table" 
-      small striped hover bordered
+      sticky-header small striped hover bordered
       :items="cases" 
       :fields="fields"
-      :per-page="perPage"
-      :current-page="currentPage"
       :filter="filter"
     ></b-table>
 
-    <b-pagination
+      <!-- :per-page="perPage"
+      :current-page="currentPage" -->
+
+    <!-- <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       aria-controls="country-table"
-    ></b-pagination>
+    ></b-pagination> -->
 
   </div>
 </template>
@@ -70,5 +68,16 @@ export default {
 </script>
 
 <style>
-
+  #country-cases-holder{
+    height: 497px;
+    overflow-y: scroll;
+  }
+  #country-table{
+    border-collapse: collapse; 
+  }
+  #country-table thead tr th{
+    position: sticky;
+    top: 0;
+    background: #fff;
+  }
 </style>
