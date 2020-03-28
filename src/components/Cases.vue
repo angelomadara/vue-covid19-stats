@@ -72,11 +72,19 @@ export default {
         { key: 'critical', sortable: true },
       ],
       countryTimeline: '',
+      countries: [],
     }
   },
   created(){
     this.axios.get(this.coronaApi+`countries?sort=cases`).then(res => {
       this.cases = res.data
+      // console.log(res.data[0].country)
+      let x = 0
+      Object.keys(res.data).forEach(element => {
+        this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
+        x++
+      })
+      EventBus.$emit('listOfCountries',this.countries)
     })
   },
   computed:{
@@ -86,13 +94,7 @@ export default {
   },
   methods:{
     thisTimeline(str){
-      // this.countryTimeline = str
       EventBus.$emit('showTimeline',str)
-      // str = ""+str.toLowerCase()
-
-      // this.axios.get(this.coronaApi+`v2/historical/`+str).then(res => {
-      //   this.countryTimeline = res.data
-      // })
     }
   }
 }

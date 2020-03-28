@@ -1,19 +1,42 @@
 <template>
     <div>
         Historical data of {{ country }}
+        <!-- <select name="" id="" class="form-control">
+            <option v-for="item in countries" 
+                :key="item.id" 
+                :value="item.value"
+                :v-model="country"
+            >
+                {{ item.text }}
+            </option>
+        </select> -->
+        
+        <div>
+            <b-form-group>
+                <b-form-radio v-model="selected" name="some-radios" value="bar">Bar Graph</b-form-radio>
+                <b-form-radio v-model="selected" name="some-radios" value="line">Line Graph</b-form-radio>
+            </b-form-group>
+
+            <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+        </div>
+
         <bar-chart 
             :data="data"
             label-rotate 
             zoom
             :zoom-range="zoomRange"
             style="height:500px !important"
+            v-if="selected=='bar'"
         />
-        <!-- <line-chart
+        <line-chart
             :data="data"
+            smooth
             area
-            animation='false'
+            zoom
+            :zoom-range="zoomRange"
             style="height:500px !important"
-        /> -->
+            else
+        />
     </div>
 </template>
 
@@ -24,9 +47,11 @@ export default {
     // 
     data(){
         return {
+            selected: 'bar',
             country : '',
             data : [],
-            zoomRange : [],
+            zoomRange : [80,100],
+            countries : [],
         }
     },
     created(){
@@ -34,8 +59,18 @@ export default {
             this.country = str
             this.timeline(str)
         })
+
+        EventBus.$on('listOfCountries',data =>{
+            this.countries = data.sort()
+        })
+    },
+    mounted(){
+        this.timeline(this.country)
     },
     methods: {
+        world(){
+
+        },
         timeline(str){
             str = ""+str.toLowerCase()
             this.axios.get(this.coronaApi+`v2/historical/`+str).then(res => {
@@ -54,8 +89,6 @@ export default {
                     deaths[y] = {'label':element,'value':rawDeaths[element]}
                     y++
                 })
-
-                this.zoomRange = [80,100]
                 
                 this.data = [
                     {
