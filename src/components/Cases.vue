@@ -40,7 +40,7 @@
         </template>
 
         <template v-slot:cell(deaths)="data">
-          {{ data.item.todayCases | prettyNumber }}
+          {{ data.item.deaths | prettyNumber }}
         </template>
 
         <template v-slot:cell(todayDeaths)="data">
