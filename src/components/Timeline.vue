@@ -71,15 +71,7 @@ export default {
             this.countries = data
         })
 
-        var requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-};
-
-fetch("https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+        
     },
     mounted(){
         // this.timeline(this.country)
