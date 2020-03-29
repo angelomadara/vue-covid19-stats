@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <select v-model="country" @change='timeline(country)' name="" id="" class="form-control custom-select-sm" style="width:300px;display:inline-block;">
-                    <option value="world">EARTH</option>
+                    <!-- <option value="world">EARTH</option> -->
                     <option v-for="item in countries" 
                         :key="item.id" 
                         :value="item.toLowerCase()"
