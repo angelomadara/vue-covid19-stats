@@ -5,11 +5,12 @@ Vue.use(VueRouter)
 
 import Index from './components/Today'
 import Cases from './components/Cases'
-
+// import Timeline from './components/Timeline'
 
 const routes = [
     {path : '/', component: Index},
     {path : '/cases', component: Cases},
+    // {path : '/timeline/:country', component: Timeline},
 ]
 
 

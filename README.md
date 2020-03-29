@@ -1,5 +1,8 @@
 # covid19
 
+### Live demo: 
+[covid.vierzehn.xyz](https://covid.vierzehn.xyz/)
+
 ## Project setup
 ```
 npm install
