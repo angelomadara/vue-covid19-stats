@@ -55,7 +55,7 @@ export default {
     data(){
         return {
             selected: 'bar',
-            country : '',
+            country : 'philippines',
             data : [],
             zoomRange : [80,100],
             countries : [],
@@ -74,7 +74,7 @@ export default {
         
     },
     mounted(){
-        // this.timeline(this.country)
+        this.timeline(this.country)
     },
     methods: {
         world(){
@@ -117,7 +117,7 @@ export default {
                         data : deaths
                     },
                     {
-                        name : 'Case per day',
+                        name : 'Cases confirmed at this day',
                         data : perday
                     }
                 ]
