@@ -10,7 +10,7 @@
       </b-input-group>
     <div id="country-cases-holder">
 
-      <b-table id="country-table" small striped hover bordered sticky-header :items="cases" :fields="fields" :filter="filter" >
+      <b-table id="country-table" index small striped hover bordered sticky-header :items="cases" :fields="fields" :filter="filter" >
 
         <template v-slot:cell(countryInfo)="data">
           <img :src="data.item.countryInfo.flag" alt="" width="20px" style='display:block;margin:6px auto'>
@@ -62,6 +62,7 @@ export default {
       filter: '',
       cases : [],
       fields: [
+        // { key: '#', label : '#', sortable: false },
         { key: 'countryInfo', label : '', sortable: false },
         { key: 'country', sortable: true },
         { key: 'cases', sortable: true },

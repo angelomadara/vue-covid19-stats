@@ -117,7 +117,7 @@ export default {
                         data : deaths
                     },
                     {
-                        name : 'Cases confirmed at this day',
+                        name : 'Cases confirmed at this date',
                         data : perday
                     }
                 ]
