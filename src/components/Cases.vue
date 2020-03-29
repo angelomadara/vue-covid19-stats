@@ -77,13 +77,22 @@ export default {
   },
   created(){
     this.axios.get(this.coronaApi+`countries?sort=cases`).then(res => {
+      
+      /**
+       * table data
+       */
       this.cases = res.data
-      // console.log(res.data[0].country)
+
+      /**
+       * this data will be sent to Timeline.vue
+       */
       let x = 0
       Object.keys(res.data).forEach(element => {
-        this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
+        // this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
+        this.countries[x] = res.data[element].country
         x++
       })
+      this.countries = this.countries.sort()
       EventBus.$emit('listOfCountries',this.countries)
     })
   },
