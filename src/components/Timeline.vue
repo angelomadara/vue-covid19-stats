@@ -12,17 +12,16 @@
         </select> -->
         
         <div>
-            <b-form-group>
+            <!-- <b-form-group> -->
                 <b-form-radio v-model="selected" name="some-radios" value="bar">Bar Graph</b-form-radio>
                 <b-form-radio v-model="selected" name="some-radios" value="line">Line Graph</b-form-radio>
-            </b-form-group>
+            <!-- </b-form-group> -->
 
             <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
         </div>
 
         <bar-chart 
             :data="data"
-            label-rotate 
             zoom
             :zoom-range="zoomRange"
             style="height:500px !important"
@@ -30,13 +29,13 @@
         />
         <line-chart
             :data="data"
-            smooth
-            area
             zoom
             :zoom-range="zoomRange"
             style="height:500px !important"
-            else
+            v-else
         />
+
+        
     </div>
 </template>
 
