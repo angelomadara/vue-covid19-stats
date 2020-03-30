@@ -16,12 +16,8 @@
                 <p>Historical data of {{ country }}</p>
                 
                 <div>
-                    <!-- <b-form-group> -->
-                        <b-form-radio v-model="selected" name="some-radios" value="bar" style="display:inline-block;margin-right:10px">Bar Graph</b-form-radio>
-                        <b-form-radio v-model="selected" name="some-radios" value="line" style="display:inline-block;">Line Graph</b-form-radio>
-                    <!-- </b-form-group> -->
-
-                    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+                    <b-form-radio v-model="selected" name="some-radios" value="bar" style="display:inline-block;margin-right:10px">Bar Graph</b-form-radio>
+                    <b-form-radio v-model="selected" name="some-radios" value="line" style="display:inline-block;">Line Graph</b-form-radio>
                 </div>
 
                 <bar-chart 
@@ -30,6 +26,7 @@
                     :zoom-range="zoomRange"
                     style="height:500px !important"
                     v-if="selected=='bar'"
+                    :animation="false"
                 />
                 <line-chart
                     :data="data"
@@ -37,11 +34,8 @@
                     :zoom-range="zoomRange"
                     style="height:500px !important"
                     v-else
+                    :animation="false"
                 />
-            </div>
-
-            <div class="col-lg-6">
-
             </div>
         </div>
         
