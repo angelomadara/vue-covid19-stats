@@ -2,8 +2,11 @@
     <div>
 
         <div class="row">
+            <div class="col-lg-4">
+                <v-select :options="countries" v-model="country" @input='getSelected'></v-select>
+            </div>
             <div class="col-lg-12">
-                <select v-model="country" @change='graphChange(country)' name="" id="" class="form-control custom-select-sm" style="width:300px;display:inline-block;">
+                <!-- <select v-model="country" @change='graphChange(country)' name="" id="" class="form-control custom-select-sm" style="width:300px;display:inline-block;">
                     <option value="world">EARTH</option>
                     <option v-for="item in countries" 
                         :key="item.id" 
@@ -11,7 +14,7 @@
                     >
                         {{ item }}
                     </option>
-                </select>
+                </select> -->
                 
                 <p>Historical data of {{ country }}</p>
                 
@@ -71,10 +74,10 @@ export default {
     data(){
         return {
             selected: 'bar',
-            country : 'world',
+            country : '',
             data : [],
             zoomRange : [80,100],
-            countries : [],
+            countries : ['Earth'],
             worldData : [],
         }
     },
@@ -85,7 +88,7 @@ export default {
         })
 
         EventBus.$on('listOfCountries',data =>{
-            this.countries = data
+            this.countries = this.countries.concat(data)
         })
 
         
@@ -95,6 +98,13 @@ export default {
         this.world()
     },
     methods: {
+        getSelected(value){
+            if(value == 'Earth'){
+                this.world()
+            }else{
+                this.timeline(value)
+            }
+        },
         graphChange(type){
             if(type == 'world'){
                 this.world()

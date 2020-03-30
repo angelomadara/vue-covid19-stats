@@ -8,7 +8,8 @@ import VCharts from 'v-charts';
 import DrVueEcharts from 'dr-vue-echarts'
 import VueTable2 from 'vue-tables-2'
 import moment from 'moment'
-// import dateFormat from 'dateformat'
+import vSelect from 'vue-select'
+
 
 Vue.config.productionTip = false
 
@@ -23,7 +24,8 @@ Vue.use(VCharts)
 Vue.use(DrVueEcharts)
 Vue.use(VueTable2)
 
-// Vue.use(dateFormat)
+// Vue.use(vSelect)
+Vue.component('v-select',vSelect)
 
 // Vue.prototype.dateFormat = dateFormat
 // Vue.prototype.moment = moment
@@ -53,6 +55,9 @@ Vue.filter('lowerCase',function(str){
   str = ""+str; // ignore trowing error and make sure that the value will be string 
   return str.toLowerCase()
 })
+
+
+import "vue-select/dist/vue-select.css";
 
 new Vue({
   render: h => h(App),
