@@ -8,6 +8,7 @@ import VCharts from 'v-charts';
 import DrVueEcharts from 'dr-vue-echarts'
 import VueTable2 from 'vue-tables-2'
 import moment from 'moment'
+// import dateFormat from 'dateformat'
 
 Vue.config.productionTip = false
 
@@ -22,7 +23,10 @@ Vue.use(VCharts)
 Vue.use(DrVueEcharts)
 Vue.use(VueTable2)
 
-Vue.prototype.moment = moment
+// Vue.use(dateFormat)
+
+// Vue.prototype.dateFormat = dateFormat
+// Vue.prototype.moment = moment
 Vue.prototype.axios = Axios
 Vue.prototype.coronaApi = 'https://corona.lmao.ninja/'
 Vue.prototype.newsApi = 'https://newsapi.org/v2/everything'
@@ -31,10 +35,15 @@ Vue.prototype.newsApiToken = 'c59b33a71f3e4c2a800b135cbabba7a7'
 /**
  * date today
  */
-Vue.prototype.today = moment().format('YYYY/MM/DD')
+// Vue.prototype.today = moment().format('YYYY/MM/DD')
 /**
  * filters
  */
+Vue.filter('dateFormatAndTimezone',function(str){
+  if(str == '') return false;
+  return moment(String(str)).format('MM/DD/YYYY Z')
+})
+
 Vue.filter('prettyNumber',function(str){
   str = ""+str; // ignore trowing error and make sure that the value will be string 
   return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
