@@ -35,6 +35,7 @@
                     <line-chart
                         :data="data"
                         zoom
+                        smooth
                         :zoom-range="zoomRange"
                         style="height:500px !important"
                         v-else
@@ -45,10 +46,12 @@
                     <bar-chart 
                         :data="data"
                         zoom
+                        smooth
                         :zoom-range="zoomRange"
                         style="height:500px !important"
                         v-if="selected=='bar'"
                         :animation="false"
+                        :colors="kulay"
                     />
                     <line-chart
                         :data="data"
@@ -79,6 +82,7 @@ export default {
             zoomRange : [80,100],
             countries : ['Earth'],
             worldData : [],
+            kulay : ['red','green','blue']
         }
     },
     created(){
