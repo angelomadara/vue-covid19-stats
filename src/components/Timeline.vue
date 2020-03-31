@@ -77,7 +77,7 @@ export default {
     data(){
         return {
             selected: 'bar',
-            country : '',
+            country : 'Earth',
             data : [],
             zoomRange : [80,100],
             countries : ['Earth'],
