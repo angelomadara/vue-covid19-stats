@@ -15,6 +15,7 @@
 
         <template v-slot:cell(rank)="rank">
           <div class="text-center">{{ rank.index+1 }}</div>
+          <!-- {{ rank.item.countryInfo }} -->
         </template>
 
         <template v-slot:cell(countryInfo)="data">
@@ -22,7 +23,8 @@
         </template>
 
         <template v-slot:cell(country)="data">
-          <a href="javascript:void(0)" @click="thisTimeline(data.item.country)">{{ data.item.country }}</a>
+          <a v-if="data.item.countryInfo.iso2 != null" href="javascript:void(0)" @click="thisTimeline({label:data.item.country,code:data.item.countryInfo.iso2})">{{ data.item.country }}</a>
+          <span v-else>{{data.item.country}}</span>
         </template>
 
         <template v-slot:cell(cases)="data">
@@ -117,7 +119,9 @@ export default {
         let x = 0
         Object.keys(res.data).forEach(element => {
           // this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
-          this.countries[x] = res.data[element].country
+          let item = res.data[element]
+          if(item.country != "Diamond Princess")
+            this.countries[x] = {label:item.country,code:item.countryInfo.iso2}
           x++
         })
         this.countries = this.countries.sort()

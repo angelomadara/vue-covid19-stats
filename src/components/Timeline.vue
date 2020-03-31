@@ -16,7 +16,7 @@
                     </option>
                 </select> -->
                 
-                <p>Historical data of {{ country }}</p>
+                <p>Historical data of {{ country.label }}</p>
                 
                 <div>
                     <b-form-radio v-model="selected" name="some-radios" value="bar" style="display:inline-block;margin-right:10px">Bar Graph</b-form-radio>
@@ -80,15 +80,16 @@ export default {
             country : 'Earth',
             data : [],
             zoomRange : [80,100],
-            countries : ['Earth'],
+            countries : [{label:'Earth',value:'Earth'}],
             worldData : [],
-            kulay : ['red','green','blue']
+            kulay : ['red','green','blue'],
+            updateStatus: "",
         }
     },
     created(){
         EventBus.$on('showTimeline',str => {
             this.country = str
-            this.timeline(str)
+            this.timeline(str.code)
         })
 
         EventBus.$on('listOfCountries',data =>{
@@ -103,10 +104,10 @@ export default {
     },
     methods: {
         getSelected(value){
-            if(value == 'Earth'){
+            if(value.code == 'Earth'){
                 this.world()
             }else{
-                this.timeline(value)
+                this.timeline(value.code)
             }
         },
         graphChange(type){
@@ -168,7 +169,12 @@ export default {
         },
         timeline(str){
             str = ""+str.toLowerCase()
-            this.axios.get(this.coronaApi+`v2/historical/`+str)
+            this.axios.get(this.coronaApi+`v2/historical/`+str,{
+                onDownloadProgress: downloadEvent => {
+                if (downloadEvent.type == 'progress')
+                    this.updateStatus = "Loading Table"
+                }
+            })
             .then(res => {
                 
                 let rawCases = res.data.timeline.cases
@@ -230,6 +236,8 @@ export default {
                         data : deathPerDay
                     },
                 ]
+
+                this.updateStatus = ""
             })
         }
     }
