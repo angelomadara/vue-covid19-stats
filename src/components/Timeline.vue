@@ -104,7 +104,7 @@ export default {
     },
     methods: {
         getSelected(value){
-            if(value.code == 'Earth'){
+            if(value.label == 'Earth'){
                 this.world()
             }else{
                 this.timeline(value.code)
