@@ -5,15 +5,16 @@
       <b-input-group size="sm">
         <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search"></b-form-input>
         <b-input-group-append>
-          <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+          <b-button  variant="primary" :disabled="!filter" @click="filter = ''">Clear</b-button>
+          <b-button variant="info" @click="updateTable()"> <b-icon icon='arrow-repeat'></b-icon> {{ updateStatus }} </b-button>
         </b-input-group-append>
       </b-input-group>
     <div id="country-cases-holder">
 
       <b-table id="country-table" index small striped hover bordered sticky-header :items="cases" :fields="fields" :filter="filter" >
 
-        <template v-slot:cell>
-          {{ counter++ }}
+        <template v-slot:cell(rank)="rank">
+          <div class="text-center">{{ rank.index+1 }}</div>
         </template>
 
         <template v-slot:cell(countryInfo)="data">
@@ -67,7 +68,7 @@ export default {
       filter: '',
       cases : [],
       fields: [
-        { key: '#', label : '#', sortable: false },
+        { key: 'rank', label : '#', sortable: false },
         { key: 'countryInfo', label : '', sortable: false },
         { key: 'country', sortable: true },
         { key: 'cases', sortable: true },
@@ -79,28 +80,11 @@ export default {
       ],
       countryTimeline: '',
       countries: [],
+      updateStatus : 'Update Table'
     }
   },
   created(){
-    this.axios.get(this.coronaApi+`countries?sort=cases`).then(res => {
-      
-      /**
-       * table data
-       */
-      this.cases = res.data
-
-      /**
-       * this data will be sent to Timeline.vue
-       */
-      let x = 0
-      Object.keys(res.data).forEach(element => {
-        // this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
-        this.countries[x] = res.data[element].country
-        x++
-      })
-      this.countries = this.countries.sort()
-      EventBus.$emit('listOfCountries',this.countries)
-    })
+    this.casesPerCountry()
   },
   computed:{
     rows() {
@@ -110,6 +94,36 @@ export default {
   methods:{
     thisTimeline(str){
       EventBus.$emit('showTimeline',str)
+    },
+    updateTable(){
+      this.casesPerCountry()
+    },
+    casesPerCountry(){
+      this.axios.get(this.coronaApi+`countries?sort=cases`,{
+        onDownloadProgress: downloadEvent => {
+          if (downloadEvent.type == 'progress')
+            this.updateStatus = "Loading Table"
+        }
+      }).then(res => {
+        
+        /**
+         * table data
+         */
+        this.cases = res.data
+
+        /**
+         * this data will be sent to Timeline.vue
+         */
+        let x = 0
+        Object.keys(res.data).forEach(element => {
+          // this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
+          this.countries[x] = res.data[element].country
+          x++
+        })
+        this.countries = this.countries.sort()
+        EventBus.$emit('listOfCountries',this.countries)
+        this.updateStatus = "Update Table"
+      })
     }
   }
 }
