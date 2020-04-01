@@ -2,18 +2,20 @@
   <div>
     <p> <b>Sorted by cases per country [You can also sort it by clicking the table header]</b></p>
 
-      <b-input-group size="sm">
-        <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search"></b-form-input>
-        <b-input-group-append>
-          <b-button  variant="primary" :disabled="!filter" @click="filter = ''">Clear</b-button>
-          <b-button variant="info" @click="updateTable()"> <b-icon icon='arrow-repeat'></b-icon> {{ updateStatus }} </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    <div id="country-cases-holder">
+    <div class="row">
+      <!-- <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <b-button variant="primary" @click="updateTable()" class=""> 
+          <b-icon icon='arrow-repeat'></b-icon> {{ updateStatus }} 
+        </b-button>
+      </div> -->
+      <div class="col"><b-form-input v-model="filter" type="search" id="filterInput" placeholder="Search country"></b-form-input></div>
+    </div>
+    
+    <div id="country-cases-holder" style="margin-top:2px">
 
       <b-table id="country-table" 
         style="
-          max-height: 498px;
+          max-height: 541px;
         "
         sort-icon-left
         index small striped hover bordered sticky-header 
@@ -90,11 +92,14 @@ export default {
       countryTimeline: '',
       countries: [],
       // earth : ,
-      updateStatus : 'Update Table',
+      updateStatus : 'Update Data',
     }
   },
   created(){
     this.casesPerCountry()
+    EventBus.$on('forceUpdate',data => {
+      if(data == true) this.casesPerCountry()
+    })
   },
   computed:{
     rows() {
@@ -105,15 +110,15 @@ export default {
     thisTimeline(str){
       EventBus.$emit('showTimeline',str)
     },
-    updateTable(){
-      this.casesPerCountry()
-      EventBus.$emit('forceUpdate',true)
-    },
+    // updateTable(){
+    //   this.casesPerCountry()
+    //   EventBus.$emit('forceUpdate',true)
+    // },
     casesPerCountry(){
       this.axios.get(this.coronaApi+`countries`,{
         onDownloadProgress: downloadEvent => {
           if (downloadEvent.type == 'progress')
-            this.updateStatus = "Loading Table"
+            this.updateStatus = "Updating Data"
         }
       }).then(res => {
         
@@ -137,7 +142,7 @@ export default {
         })
         this.countries = this.countries.sort()
         EventBus.$emit('listOfCountries',this.countries)
-        this.updateStatus = "Update Table"
+        this.updateStatus = "Update Data"
       })
     }
   }

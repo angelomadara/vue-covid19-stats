@@ -4,10 +4,12 @@
     
     <navs></navs>
     <today></today>
+    <hr>
     <slide/>
     <br>
     <timeline></timeline>
     <foot/>
+    
   </div>
 </template>
 

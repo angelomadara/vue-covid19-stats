@@ -18,14 +18,27 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(BootstrapVueIcons)
-
-Vue.use(VCharts)
-// Vue.use(VueCharts)
+Vue.use(VCharts)  
 Vue.use(DrVueEcharts)
 Vue.use(VueTable2)
-
-// Vue.use(vSelect)
 Vue.component('v-select',vSelect)
+
+/**
+ * social sharing
+ */
+var SocialSharing = require('vue-social-sharing');
+Vue.use(SocialSharing);
+
+/**
+ * font awesome
+ */
+// import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTwitter, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faFacebook,faTwitter,faLinkedin)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 
 // Vue.prototype.dateFormat = dateFormat
 // Vue.prototype.moment = moment
