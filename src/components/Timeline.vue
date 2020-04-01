@@ -51,7 +51,7 @@
                         style="height:500px !important"
                         v-if="selected=='bar'"
                         :animation="false"
-                        :colors="kulay"
+                        theme="purple-passion"
                     />
                     <line-chart
                         :data="data"
@@ -79,7 +79,7 @@ export default {
             selected: 'bar',
             country : 'Earth',
             data : [],
-            zoomRange : [80,100],
+            zoomRange : [84,100],
             countries : [{label:'Earth',value:'Earth'}],
             worldData : [],
             kulay : ['red','green','blue'],
@@ -158,13 +158,13 @@ export default {
                         'data' : totConfirmed.reverse()
                     },
                     {
+                        'name' : 'Total Recovered',
+                        'data' : totalRecovered.reverse(),
+                    },
+                    {
                         'name' : 'Total Deaths',
                         'data' : totalDeath.reverse()
                     },
-                    {
-                        'name' : 'Total Recovered',
-                        'data' : totalRecovered.reverse()
-                    }
                 ]
             })
         },
