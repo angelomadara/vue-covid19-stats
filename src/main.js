@@ -58,6 +58,8 @@ Vue.filter('lowerCase',function(str){
 
 
 import "vue-select/dist/vue-select.css";
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 new Vue({
   render: h => h(App),

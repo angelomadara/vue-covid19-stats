@@ -93,7 +93,8 @@ export default {
         })
 
         EventBus.$on('listOfCountries',data =>{
-            this.countries = this.countries.concat(data)
+            // this.countries = this.countries.concat(data)
+            this.countries = data.sort()
         })
 
         

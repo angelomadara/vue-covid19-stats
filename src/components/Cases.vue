@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p> Sorted by cases per country </p>
+    <p> <b>Sorted by cases per country [You can also sort it by clicking the table header]</b></p>
 
       <b-input-group size="sm">
         <b-form-input v-model="filter" type="search" id="filterInput" placeholder="Type to Search"></b-form-input>
@@ -11,7 +11,14 @@
       </b-input-group>
     <div id="country-cases-holder">
 
-      <b-table id="country-table" index small striped hover bordered sticky-header :items="cases" :fields="fields" :filter="filter" >
+      <b-table id="country-table" 
+        style="
+          max-height: 498px;
+        "
+        sort-icon-left
+        index small striped hover bordered sticky-header 
+        :items="items" :fields="fields" :filter="filter" 
+      >
 
         <template v-slot:cell(rank)="rank">
           <div class="text-center">{{ rank.index+1 }}</div>
@@ -66,9 +73,9 @@ import {EventBus} from '../event-bus.js'
 export default {
   data(){
     return{
-      counter: 1,
+      sortDesc: false,
       filter: '',
-      cases : [],
+      items : [],
       fields: [
         { key: 'rank', label : '#', sortable: false },
         { key: 'countryInfo', label : '', sortable: false },
@@ -82,7 +89,8 @@ export default {
       ],
       countryTimeline: '',
       countries: [],
-      updateStatus : 'Update Table'
+      // earth : ,
+      updateStatus : 'Update Table',
     }
   },
   created(){
@@ -90,7 +98,7 @@ export default {
   },
   computed:{
     rows() {
-      return this.cases.length
+      return this.items.length
     }
   },
   methods:{
@@ -99,9 +107,10 @@ export default {
     },
     updateTable(){
       this.casesPerCountry()
+      EventBus.$emit('forceUpdate',true)
     },
     casesPerCountry(){
-      this.axios.get(this.coronaApi+`countries?sort=cases`,{
+      this.axios.get(this.coronaApi+`countries`,{
         onDownloadProgress: downloadEvent => {
           if (downloadEvent.type == 'progress')
             this.updateStatus = "Loading Table"
@@ -111,12 +120,14 @@ export default {
         /**
          * table data
          */
-        this.cases = res.data
+        this.items = res.data
 
         /**
          * this data will be sent to Timeline.vue
          */
-        let x = 0
+        this.countries = []
+        let x = 1
+        this.countries[0] = {label:'Earth',value:'Earth'}
         Object.keys(res.data).forEach(element => {
           // this.countries[x] = {'text':res.data[element].country,'value':res.data[element].country.toLowerCase()}
           let item = res.data[element]
@@ -134,12 +145,12 @@ export default {
 </script>
 
 <style>
-  #country-cases-holder{
+  /* #country-cases-holder{
     height: 497px;
     overflow-y: scroll;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-  }
+  } */
   #country-table{
     border-collapse: collapse; 
   }

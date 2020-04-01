@@ -36,6 +36,7 @@
 
 import totalcasepie from './TotalCasesPie'
 import cases from './Cases'
+import { EventBus } from '../event-bus.js'
 
 export default {
     components : {totalcasepie,cases},
@@ -47,22 +48,9 @@ export default {
         }
     },
     created(){
-        this.axios.get(this.coronaApi+`all`).then(res => {
-            this.reports = res.data
-            this.data = [
-                {
-                    name: 'Total Confirmed',
-                    value: res.data.cases,
-                },
-                {
-                    name: 'Total Recovered',
-                    value: res.data.recovered,
-                },
-                {
-                    name: 'Total Deaths',
-                    value: res.data.deaths,
-                },
-            ]
+        this.worldCount()
+        EventBus.$on('forceUpdate',data => {
+            if(data == true) this.worldCount()
         })
     },
     mounted(){
@@ -72,6 +60,25 @@ export default {
             let date = new Date(this.reports.updated)
             return date.toLocaleString()
         },
+        worldCount(){
+            this.axios.get(this.coronaApi+`all`).then(res => {
+                this.reports = res.data
+                this.data = [
+                    {
+                        name: 'Total Confirmed',
+                        value: res.data.cases,
+                    },
+                    {
+                        name: 'Total Recovered',
+                        value: res.data.recovered,
+                    },
+                    {
+                        name: 'Total Deaths',
+                        value: res.data.deaths,
+                    },
+                ]
+            })
+        }
     }
 }
 </script>
