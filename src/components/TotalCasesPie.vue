@@ -1,6 +1,6 @@
 <template>
     <div>
-        <pie-chart :data="data" :animation='false' :legend='true' label-position='outside'/>
+        <pie-chart :data="data" :animation='false' :legend='true' label-position='inner'/>
     </div>
 </template>
 

@@ -4,7 +4,7 @@
         <h5 class="text-center"></h5>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="text-center">Last Update: {{ lastUpdate() }}</div>
         <totalcasepie :data='data'></totalcasepie>
         <div class="list-group">
@@ -24,11 +24,11 @@
                 </div>
             </a>
         </div>
+        <br>
+        <b-button variant="primary"  class="" @click="updateTable()" style="width:100%;"> 
+          <b-icon icon='arrow-repeat'></b-icon> {{ forceUpdateText }}
+        </b-button>
     </div>
-
-    <!-- <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
-        
-    </div> -->
 
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
         <cases></cases>
@@ -40,6 +40,7 @@
 
 import totalcasepie from './TotalCasesPie'
 import cases from './Cases'
+import { EventBus } from '../event-bus.js'
 
 export default {
     components : {totalcasepie,cases},
@@ -48,26 +49,14 @@ export default {
         return {
             reports : {},
             data: [],
+            forceUpdateText : 'Force Update Data'
         }
     },
     created(){
-        this.axios.get(this.coronaApi+`all`).then(res => {
-            this.reports = res.data
-            this.data = [
-                {
-                    name: 'Total Confirmed',
-                    value: res.data.cases,
-                },
-                {
-                    name: 'Total Recovered',
-                    value: res.data.recovered,
-                },
-                {
-                    name: 'Total Deaths',
-                    value: res.data.deaths,
-                },
-            ]
-        })
+        this.worldCount()
+        // EventBus.$on('forceUpdate',data => {
+        //     if(data == true) this.worldCount()
+        // })
     },
     mounted(){
     },
@@ -75,6 +64,37 @@ export default {
         lastUpdate(){
             let date = new Date(this.reports.updated)
             return date.toLocaleString()
+        },
+        worldCount(){
+            this.axios.get(this.coronaApi+`all`,{
+                onDownloadProgress: downloadEvent => {
+                    // console.log(downloadEvent.srcElement.getResponseHeader('content-length'))
+                    // console.log(downloadEvent)
+                if (downloadEvent.type == 'progress')
+                    this.forceUpdateText = "Updating Data"
+                }
+            }).then(res => {
+                this.reports = res.data
+                this.data = [
+                    {
+                        name: 'Total Confirmed',
+                        value: res.data.cases,
+                    },
+                    {
+                        name: 'Total Recovered',
+                        value: res.data.recovered,
+                    },
+                    {
+                        name: 'Total Deaths',
+                        value: res.data.deaths,
+                    },
+                ]
+                this.forceUpdateText = 'Force Update Data'
+            })
+        },
+        updateTable(){
+            this.worldCount()
+            EventBus.$emit('forceUpdate',true)
         },
     }
 }
