@@ -3,7 +3,6 @@
         <div class="col">
             <br>
             <p> <b-icon icon='heart-fill'></b-icon> Support open source projects</p>
-            <p><a href="mailto:angelomadara.dev@outlook.com"> <b-icon icon="at"></b-icon>angelomadara.dev@outlook.com</a></p>
             <p>Data source : <a href="https://www.worldometers.info/coronavirus" target="_blank">worldometers.info/coronavirus</a></p>
             <div>
                 <small>API source: 
@@ -28,6 +27,8 @@
                     </network>
                 </div>
             </social-sharing>
+
+            <p><small><a href="mailto:angelomadara.dev@outlook.com"> <b-icon icon="at"></b-icon>Contact Me</a></small></p>
         </div>
         
     </div>

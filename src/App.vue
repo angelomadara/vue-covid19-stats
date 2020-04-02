@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <h1 class="text-center">2019-20 Coronavirus Pandemic Update</h1>
-    
     <navs></navs>
     <today></today>
     <hr>
