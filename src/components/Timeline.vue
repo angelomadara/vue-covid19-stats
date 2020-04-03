@@ -35,7 +35,6 @@
                     <line-chart
                         :data="data"
                         zoom
-                        smooth
                         :zoom-range="zoomRange"
                         style="height:500px !important"
                         v-else
@@ -46,7 +45,6 @@
                     <bar-chart 
                         :data="data"
                         zoom
-                        smooth
                         :zoom-range="zoomRange"
                         style="height:500px !important"
                         v-if="selected=='bar'"
