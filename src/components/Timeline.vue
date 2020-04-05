@@ -77,17 +77,19 @@ export default {
             selected: 'bar',
             country : 'Earth',
             data : [],
-            zoomRange : [84,100],
+            zoomRange : [65,100],
             countries : [{label:'Earth',value:'Earth'}],
             worldData : [],
             kulay : ['red','green','blue'],
             updateStatus: "",
+            test : []
         }
     },
     created(){
         EventBus.$on('showTimeline',str => {
             this.country = str
-            this.timeline(str.code)
+            // this.timeline(str.code)
+            this.timelinev2(str.code)
         })
 
         EventBus.$on('listOfCountries',data =>{
@@ -99,21 +101,22 @@ export default {
     },
     mounted(){
         // this.timeline(this.country)
-        this.world()
+        // this.world()
+        this.worldv2()
     },
     methods: {
         getSelected(value){
             if(value.label == 'Earth'){
-                this.world()
+                this.worldv2()
             }else{
-                this.timeline(value.code)
+                this.timelinev2(value.code)
             }
         },
         graphChange(type){
             if(type == 'world'){
-                this.world()
+                this.worldv2()
             }else{
-                this.timeline(type)
+                this.timelinev2(type)
             }
         },
         world(){
@@ -124,6 +127,7 @@ export default {
                 let totConfirmed = []
                 let totalDeath = []
                 let totalRecovered = []
+                // let totalDailyCase
                 Object.keys(res.data).forEach(element => {
                     /**
                      * total confirmed
@@ -168,7 +172,7 @@ export default {
         },
         timeline(str){
             str = ""+str.toLowerCase()
-            this.axios.get(this.coronaApi+`v2/historical/`+str,{
+            this.axios.get(`${this.coronaApi}v2/historical/${str}`,{
                 onDownloadProgress: downloadEvent => {
                 if (downloadEvent.type == 'progress')
                     this.updateStatus = "Loading Table"
@@ -237,6 +241,166 @@ export default {
                 ]
 
                 this.updateStatus = ""
+            })
+        },
+        worldv2(){
+            this.axios('https://corona.lmao.ninja/v2/historical/all')
+            .then(res => {
+                let totConfirmed = []
+                let totalDeath = []
+                let totalRecovered = []
+                let x = 0; 
+                let y = 0; 
+                let z = 0;
+                // let totalDailyCase
+                Object.keys(res.data.cases).forEach(element => {
+                    /**
+                     * total confirmed
+                     */
+                    // let time = res.data[element].lastUpdated
+                    totConfirmed[x] = {
+                        'label' : element,
+                        // 'label_complete' : res.data[element].lastUpdated,
+                        'value' : res.data.cases[element],
+                    }
+                    x++
+                })
+                Object.keys(res.data.deaths).forEach(element => {
+                    /**
+                     * total deaths
+                     */
+                    totalDeath[y] = {
+                        'label' : element,
+                        'value' : res.data.deaths[element]
+                    }
+                    y++
+                })
+                Object.keys(res.data.recovered).forEach(element => {
+                    /**
+                     * total recoverd
+                     */
+                    totalRecovered[z] = {
+                        'label' : element,
+                        'value' : res.data.recovered[element]
+                    }
+                    z++
+                })
+
+                this.data = [
+                    {
+                        'name' : 'Total Confirmed',
+                        'data' : totConfirmed
+                    },
+                    {
+                        'name' : 'Total Recovered',
+                        'data' : totalRecovered,
+                    },
+                    {
+                        'name' : 'Total Deaths',
+                        'data' : totalDeath
+                    },
+                ]
+            })
+        },
+        timelinev2(str){
+            str = ""+str.toLowerCase()+","
+            this.axios.get(`${this.coronaApi}v2/historical/${str}/?lastdays=all`)
+            .then(res => {
+                
+                let data = res.data[0]
+
+                let cases = []; let x = 0; 
+                let yesterdayCase = 0;
+                let casePerDay = [];
+                Object.keys(data.timeline.cases).forEach(element => {
+                    /**
+                     * total cases
+                     */
+                    cases[x] = {'label':element,'value':data.timeline.cases[element]}
+
+                    /**
+                     * new case per day
+                     */
+                    yesterdayCase = x==0 ? 0 : x-1
+                    var value = data.timeline.cases[element] - cases[yesterdayCase].value
+                    casePerDay[x] = {
+                        'label': element,
+                        'value': value < 0 ? 0 : value,
+                    }
+
+                    x++
+                });
+
+                let rawDeaths = data.timeline.deaths
+                let deaths = []; let y = 0;
+                let yesterdayDeath = 0; let deathPerDay = [];
+                Object.keys(rawDeaths).forEach(element => {
+                    /**
+                     * total deaths
+                     */
+                    deaths[y] = {'label':element,'value':rawDeaths[element]}
+                    /**
+                     * death case per day
+                     */
+                    yesterdayDeath = y==0 ? 0 : y-1
+                    var value = rawDeaths[element] - deaths[yesterdayDeath].value
+                    deathPerDay[y] = {
+                        'label' : element,
+                        'value' : value < 0 ? 0 : value
+                    }
+
+                    y++
+                })
+
+                let rawRecovered = data.timeline.recovered;
+                let recovered = []; 
+                let z = 0;
+                let yesterdayRecovered = 0;
+                let recoveredPerDay = [];
+                Object.keys(rawRecovered).forEach(element => {
+                    /**
+                     * total recovieries
+                     */
+                    recovered[z] = {'label':element,'value':rawRecovered[element]}
+                    /**
+                     * recovieries case per day
+                     */
+                    yesterdayRecovered = z==0 ? 0 : z-1
+                    var value = rawRecovered[element] - recovered[yesterdayRecovered].value
+                    recoveredPerDay[z] = {
+                        'label' : element,
+                        'value' : value < 0 ? 0 : value
+                    }
+
+                    z++
+                })
+                
+                this.data = [
+                    {
+                        name : 'Total Cases',
+                        data : cases
+                    },
+                    {
+                        name : 'Total Deaths',
+                        data : deaths
+                    },
+                    {
+                        name : 'Total Recovered',
+                        data : recovered
+                    },
+                    {
+                        name : 'Cases per day',
+                        data : casePerDay
+                    },
+                    {
+                        name : 'Deaths per day',
+                        data : deathPerDay
+                    },
+                    {
+                        name : 'Recovered per day',
+                        data : recoveredPerDay
+                    },
+                ]
             })
         }
     }
