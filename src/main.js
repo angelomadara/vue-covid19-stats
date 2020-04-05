@@ -22,12 +22,14 @@ Vue.use(VCharts)
 Vue.use(DrVueEcharts)
 Vue.use(VueTable2)
 Vue.component('v-select',vSelect)
-
 /**
  * social sharing
  */
-var SocialSharing = require('vue-social-sharing');
+const SocialSharing = require('vue-social-sharing');
 Vue.use(SocialSharing);
+
+// const Swal = require('sweetalert2')
+// Vue.use(Swal)
 
 /**
  * font awesome
@@ -46,6 +48,10 @@ Vue.prototype.axios = Axios
 Vue.prototype.coronaApi = 'https://corona.lmao.ninja/'
 Vue.prototype.newsApi = 'https://newsapi.org/v2/everything'
 Vue.prototype.newsApiToken = 'c59b33a71f3e4c2a800b135cbabba7a7'
+
+
+import VueSweetalert2 from 'vue-sweetalert2';
+Vue.use(VueSweetalert2);
 
 /**
  * date today
@@ -73,6 +79,7 @@ Vue.filter('lowerCase',function(str){
 import "vue-select/dist/vue-select.css";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 new Vue({
   render: h => h(App),
