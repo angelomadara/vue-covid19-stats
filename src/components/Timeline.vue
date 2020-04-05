@@ -307,6 +307,17 @@ export default {
             this.axios.get(`${this.coronaApi}v2/historical/${str}/?lastdays=all`)
             .then(res => {
                 
+                if(res.data[0].message){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: res.data[0].message,
+                    });
+                    this.data = []
+                    return false
+                }
+
+
                 let data = res.data[0]
 
                 let cases = []; let x = 0; 
