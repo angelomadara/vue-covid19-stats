@@ -338,7 +338,6 @@ export default {
                         'label': element,
                         'value': value < 0 ? 0 : value,
                     }
-
                     x++
                 });
 
@@ -359,7 +358,6 @@ export default {
                         'label' : element,
                         'value' : value < 0 ? 0 : value
                     }
-
                     y++
                 })
 
@@ -382,7 +380,6 @@ export default {
                         'label' : element,
                         'value' : value < 0 ? 0 : value
                     }
-
                     z++
                 })
                 
