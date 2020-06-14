@@ -119,6 +119,7 @@ export default {
         onDownloadProgress: downloadEvent => {
           if (downloadEvent.type == 'progress')
             this.updateStatus = "Updating Data"
+            // this is a sample comment
         }
       }).then(res => {
         
