@@ -66,7 +66,7 @@ export default {
             return date.toLocaleString()
         },
         worldCount(){
-            this.axios.get(this.coronaApi+`all`,{
+            this.axios.get(this.coronaApi+`v2/all`,{
                 onDownloadProgress: downloadEvent => {
                     // console.log(downloadEvent.srcElement.getResponseHeader('content-length'))
                     // console.log(downloadEvent)

@@ -115,7 +115,7 @@ export default {
     //   EventBus.$emit('forceUpdate',true)
     // },
     casesPerCountry(){
-      this.axios.get(`${this.coronaApi}countries?sort=cases`,{
+      this.axios.get(`${this.coronaApi}v2/countries?sort=cases`,{
         onDownloadProgress: downloadEvent => {
           if (downloadEvent.type == 'progress')
             this.updateStatus = "Updating Data"
