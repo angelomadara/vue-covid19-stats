@@ -7,6 +7,8 @@
     <slide/>
     <br>
     <timeline></timeline>
+
+    <world></world>
     <foot/>
     
   </div>
@@ -18,10 +20,11 @@ import today from './components/Today'
 import timeline from './components/Timeline'
 import foot from './components/Footer'
 import slide from './components/Slide'
+import world from './components/World'
 
 export default {
   name: 'App',
-  components: { today, navs, timeline, foot, slide }
+  components: { today, navs, timeline, foot, slide, world }
 }
 </script>
 
