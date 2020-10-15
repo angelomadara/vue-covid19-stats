@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row" id="footer">
         <div class="col">
             <br>
             <p> <b-icon icon='heart-fill'></b-icon> Support open source projects</p>
@@ -41,6 +41,10 @@ export default {
 </script>
 
 <style>
+div#footer{
+    font-size: 12px;
+    margin-top: 50px;
+}
 #share-buttons span[data-link^="#share-"]{
     margin-right: 5px;
     cursor: pointer;
